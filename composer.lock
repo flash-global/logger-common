@@ -4,12 +4,12 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "92be3cfa2418122e838cfe4b98650479",
-    "content-hash": "ae1d076ee2e70ada715fc8f64aba841e",
+    "hash": "9cf07a229bf4da19ac8acc7d6aa7be2a",
+    "content-hash": "26b3ac652d955c71d4d1402dce309bf0",
     "packages": [
         {
             "name": "fei/entities",
-            "version": "dev-develop",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/entities.git",
@@ -2757,9 +2757,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "fei/entities": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
