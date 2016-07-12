@@ -412,7 +412,7 @@
         /**
          * @return mixed
          */
-        public function getContexts()
+        public function getContext()
         {
             return $this->contexts;
         }
