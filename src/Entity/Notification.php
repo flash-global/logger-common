@@ -13,7 +13,7 @@
     /**
      * Class NotificationEndpoint
      *
-     * @Entity(repositoryClass="NotificationRepository")
+     * @Entity
      * @Table(name="notifications", indexes={@Index(name="idx_notification_levels", columns={"level"}),
      *                              @Index(name="idx_notification_servers", columns={"server"}),
      *                                                                      @Index(name="idx_notification_envs", columns={"env"})})
