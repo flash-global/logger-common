@@ -25,13 +25,14 @@
         const PERFORMANCE = 2;
         const BUSINESS    = 4;
         const AUDIT       = 8;
+        const SQL       = 16;
 
         // level
-        const DEBUG   = 1;
-        const INFO    = 2;
-        const WARNING = 4;
-        const ERROR   = 8;
-        const PANIC   = 16;
+        const LVL_DEBUG   = 1;
+        const LVL_INFO    = 2;
+        const LVL_WARNING = 4;
+        const LVL_ERROR   = 8;
+        const LVL_PANIC   = 16;
 
 
         protected $levelLabels    = [1 => 'Debug', 2 => 'Info', 4 => 'Warning', 8 => 'Error', 16 => 'Panic'];
