@@ -13,7 +13,7 @@
     /**
      * Class NotificationEndpoint
      *
-     * @Entity
+     * @Entity(repositoryClass="NotificationRepository")
      * @Table(name="notifications", indexes={@Index(name="idx_notification_levels", columns={"level"}),
      *                              @Index(name="idx_notification_servers", columns={"server"}),
      *                                                                      @Index(name="idx_notification_envs", columns={"env"})})
@@ -111,9 +111,9 @@
         protected $env = 'n/c';
 
         /**
-         * @Column(type="json_array", nullable=true)
+         * @OneToMany(targetEntity="Context", mappedBy="notifications")
          */
-        protected $context;
+        protected $contexts;
 
         /**
          * @return mixed
@@ -412,26 +412,9 @@
         /**
          * @return mixed
          */
-        public function getContext()
+        public function getContexts()
         {
-            return $this->context;
-        }
-
-        /**
-         * @param mixed $context
-         *
-         * @return $this
-         */
-        public function setContext($context)
-        {
-            if (is_string($context))
-            {
-                $context = json_decode(trim($context), true, JSON_OBJECT_AS_ARRAY | JSON_PARTIAL_OUTPUT_ON_ERROR);
-            }
-
-            $this->context = $context;
-
-            return $this;
+            return $this->contexts;
         }
 
     }
