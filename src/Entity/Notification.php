@@ -35,9 +35,9 @@
         const LVL_PANIC   = 16;
 
 
-        protected $levelLabels    = [1 => 'Debug', 2 => 'Info', 4 => 'Warning', 8 => 'Error', 16 => 'Panic'];
+        protected $levelLabels    = array(1 => 'Debug', 2 => 'Info', 4 => 'Warning', 8 => 'Error', 16 => 'Panic');
 
-        protected $categoryLabels = [1 => 'Security', 2 => 'Performance', 4 => 'Business', 8 => 'Audit'];
+        protected $categoryLabels = array(1 => 'Security', 2 => 'Performance', 4 => 'Business', 8 => 'Audit');
 
         /**
          * @Id
