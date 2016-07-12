@@ -14,7 +14,7 @@ use Fei\Entity\AbstractEntity;
  * Class Context
  *
  * @Entity
- * @Table(name="contexts", indexes={@Index(name="idx_contexts_keys", columns={"key"})})
+ * @Table(name="contexts")
  */
 class Context extends AbstractEntity
 {
@@ -26,26 +26,20 @@ class Context extends AbstractEntity
 	protected $id;
 
 	/**
-	 * @Column(type="integer")
-	 */
-	protected $notification_id;
-
-	/**
 	 * @ManyToOne(targetEntity="Notification", inversedBy="contexts")
 	 * @JoinColumn(name="notification_id", referencedColumnName="id")
 	 */
 	protected $notification;
 
 	/**
-	 * @Column(type="string")
+	* @Column(type="string", name="`key`")
 	 */
 	protected $key;
 
 	/**
-	 * @Column(type="string")
+	 * @Column(type="string", name="`value`")
 	 */
 	protected $value;
-
 
 	/**
 	 * @return mixed
@@ -71,19 +65,19 @@ class Context extends AbstractEntity
 	/**
 	 * @return mixed
 	 */
-	public function getNotificationId()
+	public function getNotification()
 	{
-		return $this->notification_id;
+		return $this->notification;
 	}
 
 	/**
 	 * @param mixed $notification_id
 	 *
-	 * @return Notification
+	 * @return Context
 	 */
-	public function setNotificationId($notification_id)
+	public function setNotification($notification)
 	{
-		$this->notification_id = $notification_id;
+		$this->notification = $notification;
 
 		return $this;
 	}
@@ -99,7 +93,7 @@ class Context extends AbstractEntity
 	/**
 	 * @param mixed $key
 	 *
-	 * @return Notification
+	 * @return Context
 	 */
 	public function setKey($key)
 	{
@@ -117,9 +111,9 @@ class Context extends AbstractEntity
 	}
 
 	/**
-	 * @param mixed $namespace
+	 * @param mixed $value
 	 *
-	 * @return Notification
+	 * @return Context
 	 */
 	public function setValue($value)
 	{
