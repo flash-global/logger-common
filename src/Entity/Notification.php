@@ -1,6 +1,7 @@
 <?php
     namespace Fei\Service\Logger\Entity;
 
+    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping\Column;
     use Doctrine\ORM\Mapping\Entity;
     use Doctrine\ORM\Mapping\GeneratedValue;
@@ -112,9 +113,14 @@
         protected $env = 'n/c';
 
         /**
-         * @Column(type="json_array", nullable=true)
+         * @OneToMany(targetEntity="Context", mappedBy="notification")
          */
-        protected $context;
+        protected $contexts;
+
+        public function __construct()
+        {
+            $this->contexts = new ArrayCollection();
+        }
 
         /**
          * @return mixed
@@ -411,28 +417,40 @@
         }
 
         /**
-         * @return mixed
+         * @return ArrayCollection
          */
         public function getContext()
         {
-            return $this->context;
+            return $this->contexts;
         }
 
-        /**
-         * @param mixed $context
-         *
-         * @return $this
-         */
         public function setContext($context)
         {
-            if (is_string($context))
+            if(is_string($context))
             {
-                $context = json_decode(trim($context), true, JSON_OBJECT_AS_ARRAY | JSON_PARTIAL_OUTPUT_ON_ERROR);
+                $context = json_decode($context, JSON_OBJECT_AS_ARRAY);
             }
 
-            $this->context = $context;
+
+            if($context instanceof Context)
+            {
+                $context = array($context);
+            }
+            
+            if($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
+            {
+                foreach($context as $item)
+                {
+                    if(!$item instanceof Context)
+                    {
+                        $item = new Context($item);
+                    }
+                    
+                    $item->setNotification($this);
+                    $this->contexts->add($item);
+                }
+            }
 
             return $this;
         }
-
     }
