@@ -71,7 +71,7 @@ class Context extends AbstractEntity
 	}
 
 	/**
-	 * @param mixed $notification_id
+	 * @param mixed $notification
 	 *
 	 * @return Context
 	 */
