@@ -449,15 +449,15 @@
         
             if ($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
             {
-                foreach ($context as $item)
+                foreach ($context as $key => $value)
                 {
-                    if (!$item instanceof Context)
+                    if (!$value instanceof Context)
                     {
-                        $item = new Context($item);
+                        $value = new Context(['key' => $key, 'value' => $value]);
                     }
                 
-                    $item->setNotification($this);
-                    $this->contexts->add($item);
+                    $value->setNotification($this);
+                    $this->contexts->add($value);
                 }
             }
         
