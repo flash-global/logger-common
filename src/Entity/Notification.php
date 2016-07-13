@@ -416,11 +416,40 @@
         }
 
         /**
-         * @return mixed
+         * @return ArrayCollection
          */
         public function getContext()
         {
             return $this->contexts;
         }
 
+        public function setContext($context)
+        {
+            if(is_string($context))
+            {
+                $context = json_decode($context, JSON_OBJECT_AS_ARRAY);
+            }
+
+
+            if($context instanceof Context)
+            {
+                $context = array($context);
+            }
+            
+            if($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
+            {
+                foreach($context as $item)
+                {
+                    if(!$item instanceof Context)
+                    {
+                        $item = new Context($item);
+                    }
+                    
+                    $item->setNotification($this);
+                    $this->contexts->add($item);
+                }
+            }
+
+            return $this;
+        }
     }
