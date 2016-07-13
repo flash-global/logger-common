@@ -423,34 +423,44 @@
         {
             return $this->contexts;
         }
-
+    
+        /**
+         * @param $context
+         *
+         * @return $this
+         */
         public function setContext($context)
         {
-            if(is_string($context))
+            if (is_string($context))
             {
                 $context = json_decode($context, JSON_OBJECT_AS_ARRAY);
+            
+                // work around empty contexts
+                if (count($context) == 1 && is_null($context[0]['id']))
+                {
+                    return $this;
+                }
             }
-
-
-            if($context instanceof Context)
+        
+            if ($context instanceof Context)
             {
                 $context = array($context);
             }
-            
-            if($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
+        
+            if ($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
             {
-                foreach($context as $item)
+                foreach ($context as $item)
                 {
-                    if(!$item instanceof Context)
+                    if (!$item instanceof Context)
                     {
                         $item = new Context($item);
                     }
-                    
+                
                     $item->setNotification($this);
                     $this->contexts->add($item);
                 }
             }
-
+        
             return $this;
         }
     }
