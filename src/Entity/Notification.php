@@ -113,7 +113,7 @@
         protected $env = 'n/c';
 
         /**
-         * @OneToMany(targetEntity="Context", mappedBy="notification")
+         * @OneToMany(targetEntity="Context", mappedBy="notification", cascade={"all"})
          */
         protected $contexts;
 
