@@ -232,10 +232,17 @@
          */
         public function setNamespace($namespace)
         {
-            $namespace       = $this->toSnakeCase($namespace, '-');
+            $parts = explode('/', $namespace);
+    
+            foreach ($parts as &$part)
+            {
+                $part = $this->toSnakeCase($part, '-');
+            }
+    
+            $namespace       = implode('/', $parts);
             $namespace       = '/' . trim($namespace, '/');
             $this->namespace = $namespace;
-
+    
             return $this;
         }
 
