@@ -1,6 +1,7 @@
 <?php
     namespace Fei\Service\Logger\Entity;
 
+    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping\Column;
     use Doctrine\ORM\Mapping\Entity;
     use Doctrine\ORM\Mapping\GeneratedValue;
@@ -111,9 +112,14 @@
         protected $env = 'n/c';
 
         /**
-         * @OneToMany(targetEntity="Context", mappedBy="notifications")
+         * @OneToMany(targetEntity="Context", mappedBy="notification")
          */
         protected $contexts;
+
+        public function __construct()
+        {
+            $this->contexts = new ArrayCollection();
+        }
 
         /**
          * @return mixed
