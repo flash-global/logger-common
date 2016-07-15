@@ -26,12 +26,11 @@
   ],
   "require": {
     "league/fractal": "^0.13.0",
-    "fei/entities": "1.*"
+    "fei/entities": "1.*",
+    "doctrine/orm": ">=2.5"
   },
   "require-dev": {
-    "doctrine/orm": ">=2.5",
     "codeception/codeception": "2.*"
-
   },
   "autoload": {
     "psr-4": {
