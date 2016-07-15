@@ -12,14 +12,14 @@ class NotificationTransformer extends TransformerAbstract
     {
 
         $contextTransformer = new ContextTransformer();
-        $contextItems = [];
+        $contextItems = array();
 
         foreach($notification->getContext() as $contextItem)
         {
             $contextItems[] = $contextTransformer->transform($contextItem);
         }
 
-        return [
+        return array(
             'id' => (int) $notification->getId(),
             'reported_at' => $notification->getReportedAt()->format(\DateTime::ISO8601),
             'level' => (int) $notification->getLevel(),
@@ -34,6 +34,6 @@ class NotificationTransformer extends TransformerAbstract
             'category' => $notification->getCategory(),
             'env' => $notification->getEnv(),
             'context' => $contextItems,
-        ];
+        );
     }
 }

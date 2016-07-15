@@ -11,10 +11,10 @@
         public function transform(Context $context)
         {
 
-            return [
+            return array(
                 'id'  => (int) $context->getId(),
                 'key' => $context->getKey(),
                 'value' => $context->getValue()
-            ];
+            );
         }
     }
