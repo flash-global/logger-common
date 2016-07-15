@@ -2,12 +2,6 @@
     namespace Fei\Service\Logger\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
-    use Doctrine\ORM\Mapping\Column;
-    use Doctrine\ORM\Mapping\Entity;
-    use Doctrine\ORM\Mapping\GeneratedValue;
-    use Doctrine\ORM\Mapping\Id;
-    use Doctrine\ORM\Mapping\Index;
-    use Doctrine\ORM\Mapping\Table;
     use Fei\Entity\AbstractEntity;
 
 
@@ -113,7 +107,7 @@
         protected $env = 'n/c';
 
         /**
-         * @OneToMany(targetEntity="Context", mappedBy="notification")
+         * @OneToMany(targetEntity="Context", mappedBy="notification", cascade={"all"})
          */
         protected $contexts;
 
@@ -188,7 +182,7 @@
 
         public function getLevelLabel()
         {
-            $labels = [];
+            $labels = array();
             foreach ($this->levelLabels as $level => $label)
             {
                 if ($level & $this->level) $labels[] = $label;
@@ -232,10 +226,17 @@
          */
         public function setNamespace($namespace)
         {
-            $namespace       = $this->toSnakeCase($namespace, '-');
+            $parts = explode('/', $namespace);
+    
+            foreach ($parts as &$part)
+            {
+                $part = $this->toSnakeCase($part, '-');
+            }
+    
+            $namespace       = implode('/', $parts);
             $namespace       = '/' . trim($namespace, '/');
             $this->namespace = $namespace;
-
+    
             return $this;
         }
 
@@ -353,7 +354,7 @@
          */
         public function setOrigin($origin)
         {
-            if (!in_array($origin, ['http', 'cron', 'cli']))
+            if (!in_array($origin, array('http', 'cron', 'cli')))
             {
                 throw new \InvalidArgumentException('NotificationEndpoint origin has to be either "http", "cron" or "cli"');
             }
@@ -387,7 +388,7 @@
          */
         public function getCategoryLabel()
         {
-            $labels = [];
+            $labels = array();
             foreach ($this->categoryLabels as $category => $label)
             {
                 if ($category & $this->category) $labels[] = $label;
@@ -453,7 +454,7 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $value = new Context(['key' => $key, 'value' => $value]);
+                        $value = new Context(array('key' => $key, 'value' => $value));
                     }
                 
                     $value->setNotification($this);
