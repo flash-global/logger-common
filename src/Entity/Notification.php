@@ -1,12 +1,7 @@
 <?php
     namespace Fei\Service\Logger\Entity;
 
-    use Doctrine\ORM\Mapping\Column;
-    use Doctrine\ORM\Mapping\Entity;
-    use Doctrine\ORM\Mapping\GeneratedValue;
-    use Doctrine\ORM\Mapping\Id;
-    use Doctrine\ORM\Mapping\Index;
-    use Doctrine\ORM\Mapping\Table;
+    use Doctrine\Common\Collections\ArrayCollection;
     use Fei\Entity\AbstractEntity;
 
 
@@ -112,9 +107,14 @@
         protected $env = 'n/c';
 
         /**
-         * @Column(type="json_array", nullable=true)
+         * @OneToMany(targetEntity="Context", mappedBy="notification", cascade={"all"})
          */
-        protected $context;
+        protected $contexts;
+
+        public function __construct()
+        {
+            $this->contexts = new ArrayCollection();
+        }
 
         /**
          * @return mixed
@@ -182,7 +182,7 @@
 
         public function getLevelLabel()
         {
-            $labels = [];
+            $labels = array();
             foreach ($this->levelLabels as $level => $label)
             {
                 if ($level & $this->level) $labels[] = $label;
@@ -227,14 +227,16 @@
         public function setNamespace($namespace)
         {
             $parts = explode('/', $namespace);
-            foreach ($parts as &$part) {
+    
+            foreach ($parts as &$part)
+            {
                 $part = $this->toSnakeCase($part, '-');
             }
-
+    
             $namespace       = implode('/', $parts);
             $namespace       = '/' . trim($namespace, '/');
             $this->namespace = $namespace;
-
+    
             return $this;
         }
 
@@ -352,7 +354,7 @@
          */
         public function setOrigin($origin)
         {
-            if (!in_array($origin, ['http', 'cron', 'cli']))
+            if (!in_array($origin, array('http', 'cron', 'cli')))
             {
                 throw new \InvalidArgumentException('NotificationEndpoint origin has to be either "http", "cron" or "cli"');
             }
@@ -386,7 +388,7 @@
          */
         public function getCategoryLabel()
         {
-            $labels = [];
+            $labels = array();
             foreach ($this->categoryLabels as $category => $label)
             {
                 if ($category & $this->category) $labels[] = $label;
@@ -416,15 +418,15 @@
         }
 
         /**
-         * @return mixed
+         * @return ArrayCollection
          */
         public function getContext()
         {
-            return $this->context;
+            return $this->contexts;
         }
-
+    
         /**
-         * @param mixed $context
+         * @param $context
          *
          * @return $this
          */
@@ -432,12 +434,34 @@
         {
             if (is_string($context))
             {
-                $context = json_decode(trim($context), true, JSON_OBJECT_AS_ARRAY | JSON_PARTIAL_OUTPUT_ON_ERROR);
+                $context = json_decode($context, JSON_OBJECT_AS_ARRAY);
+            
+                // work around empty contexts
+                if (count($context) == 1 && is_null($context[0]['id']))
+                {
+                    return $this;
+                }
             }
-
-            $this->context = $context;
-
+        
+            if ($context instanceof Context)
+            {
+                $context = array($context);
+            }
+        
+            if ($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
+            {
+                foreach ($context as $key => $value)
+                {
+                    if (!$value instanceof Context)
+                    {
+                        $value = new Context(array('key' => $key, 'value' => $value));
+                    }
+                
+                    $value->setNotification($this);
+                    $this->contexts->add($value);
+                }
+            }
+        
             return $this;
         }
-
     }
