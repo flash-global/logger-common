@@ -60,7 +60,7 @@
         /**
          * @Column(type="string")
          */
-        protected $namespace;
+        protected $namespace = '/';
 
         /**
          * @Column(type="string")
@@ -110,14 +110,14 @@
          * @OneToMany(targetEntity="Context", mappedBy="notification", cascade={"all"})
          */
         protected $contexts;
-    
+
         /**
          * Notification constructor.
          */
         public function __construct($data = null)
         {
             $this->contexts = new ArrayCollection();
-            
+
             parent::__construct($data);
         }
 
@@ -160,6 +160,7 @@
             {
                 $reportedAt = new \DateTime($reportedAt);
             }
+
             $this->reportedAt = $reportedAt;
 
             return $this;
@@ -232,16 +233,16 @@
         public function setNamespace($namespace)
         {
             $parts = explode('/', $namespace);
-    
+
             foreach ($parts as &$part)
             {
                 $part = $this->toSnakeCase($part, '-');
             }
-    
+
             $namespace       = implode('/', $parts);
             $namespace       = '/' . trim($namespace, '/');
             $this->namespace = $namespace;
-    
+
             return $this;
         }
 
@@ -272,20 +273,19 @@
         {
             $backTrace = $this->backTrace;
 
-            if (is_string($backTrace))
-            {
-                $backTrace = json_decode($backTrace, true);
-            }
-
             return $backTrace;
         }
 
         /**
          * @param mixed $backTrace
+         *
+         * @return $this
          */
         public function setBackTrace($backTrace)
         {
             $this->backTrace = $backTrace;
+
+            return $this;
         }
 
         /**
@@ -298,10 +298,14 @@
 
         /**
          * @param mixed $user
+         *
+         * @return $this
          */
         public function setUser($user)
         {
             $this->user = $user;
+
+            return $this;
         }
 
         /**
@@ -314,10 +318,14 @@
 
         /**
          * @param mixed $server
+         *
+         * @return $this
          */
         public function setServer($server)
         {
             $this->server = $server;
+
+            return $this;
         }
 
         /**
@@ -330,10 +338,14 @@
 
         /**
          * @param mixed $command
+         *
+         * @return $this
          */
         public function setCommand($command)
         {
             $this->command = $command;
+
+            return $this;
         }
 
         /**
@@ -429,7 +441,7 @@
         {
             return $this->contexts;
         }
-    
+
         /**
          * @param $context
          *
@@ -441,28 +453,29 @@
             {
                 $context = array($context);
             }
-        
+
             if ($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator)
             {
                 foreach ($context as $key => $value)
                 {
-                    
                     if (!$value instanceof Context)
                     {
-	                    $value = new Context($value);
+                        $value = new Context($value);
                     }
 
-	                $value->setNotification($this);
-	                $this->contexts->add($value);
+                    $value->setNotification($this);
+                    $this->contexts->add($value);
                 }
             }
-        
+
             return $this;
         }
-    
+
+        /**
+         * {@inheritdoc}
+         */
         public function hydrate($data)
         {
-            
             if(!empty($data['context']))
             {
                 foreach((array) $data['context'] as $key => $value)
@@ -474,9 +487,25 @@
                     }
                 }
             }
-            
+
             return parent::hydrate($data);
         }
-    
-    
+
+        /**
+         * {@inheritdoc}
+         */
+        public function toArray($mapped = false)
+        {
+            $data = parent::toArray($mapped);
+
+            if (!empty($data['context'])) {
+                $context = array();
+                foreach ($data['context'] as $key => $value) {
+                    $context[$key] = $value->toArray();
+                }
+                $data['context'] = $context;
+            }
+
+            return $data;
+        }
     }
