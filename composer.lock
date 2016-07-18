@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be155da64901540d5e50fe59308be710",
-    "content-hash": "16061ab1f4757fbf9c16f7c2f9caa6b9",
+    "hash": "e80933db491adfb70ffbd0088b560dab",
+    "content-hash": "5a33ab1bf80200fad45431242456ee25",
     "packages": [
         {
             "name": "fei/entities",

@@ -11,11 +11,6 @@
       "name": "Gauthier Delamarre",
       "email": "gauthier@opcoding.eu",
       "role": "lead"
-    },
-    {
-      "name": "Jerome Schaeffer",
-      "email": "jsc@opcoding.eu",
-      "role": "developer"
     }
   ],
   "repositories": [
@@ -29,7 +24,7 @@
     "fei/entities": "^1.0.3"
   },
   "require-dev": {
-    "codeception/codeception": "2.*",
+    "codeception/codeception": "^2.2",
     "doctrine/orm": ">=2.5"
   },
   "autoload": {

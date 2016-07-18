@@ -110,10 +110,15 @@
          * @OneToMany(targetEntity="Context", mappedBy="notification", cascade={"all"})
          */
         protected $contexts;
-
-        public function __construct()
+    
+        /**
+         * Notification constructor.
+         */
+        public function __construct($data = null)
         {
             $this->contexts = new ArrayCollection();
+            
+            parent::__construct($data);
         }
 
         /**
@@ -432,17 +437,6 @@
          */
         public function setContext($context)
         {
-            if (is_string($context))
-            {
-                $context = json_decode($context, JSON_OBJECT_AS_ARRAY);
-            
-                // work around empty contexts
-                if (count($context) == 1 && is_null($context[0]['id']))
-                {
-                    return $this;
-                }
-            }
-        
             if ($context instanceof Context)
             {
                 $context = array($context);
@@ -452,6 +446,7 @@
             {
                 foreach ($context as $key => $value)
                 {
+                    
                     if (!$value instanceof Context)
                     {
 	                    $context_to_add = new Context(array('id' => $value['id'], 'key' => $value['key'], 'value' => $value['value']));
@@ -464,4 +459,25 @@
         
             return $this;
         }
+    
+        public function hydrate($data)
+        {
+            
+            if(!empty($data['context']))
+            {
+                foreach((array) $data['context'] as $key => $value)
+                {
+                    if(is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
+                    {
+                        $context = new Context();
+                        $context->hydrate($value);
+                        $data['context'][$key] = $context;
+                    }
+                }
+            }
+            
+            return parent::hydrate($data);
+        }
+    
+    
     }
