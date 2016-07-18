@@ -68,7 +68,7 @@
         protected $message;
 
         /**
-         * @Column(type="text", nullable=true)
+         * @Column(type="json_array", nullable=true)
          */
         protected $backTrace;
 
