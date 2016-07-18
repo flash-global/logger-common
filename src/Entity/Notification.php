@@ -68,7 +68,7 @@
         protected $message;
 
         /**
-         * @Column(type="text", nullable=true)
+         * @Column(type="json_array", nullable=true)
          */
         protected $backTrace;
 
@@ -460,7 +460,8 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $value = new Context($value);
+                        $contextData = array('key' => $key, 'value' => $value);
+                        $value     = new Context($contextData);
                     }
 
                     $value->setNotification($this);
