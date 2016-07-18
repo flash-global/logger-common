@@ -449,11 +449,11 @@
                     
                     if (!$value instanceof Context)
                     {
-	                    $context_to_add = new Context(array('id' => $value['id'], 'key' => $value['key'], 'value' => $value['value']));
+	                    $value = new Context($value);
                     }
 
-	                $context_to_add->setNotification($this);
-	                $this->contexts->add($context_to_add);
+	                $value->setNotification($this);
+	                $this->contexts->add($value);
                 }
             }
         
@@ -469,8 +469,7 @@
                 {
                     if(is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
                     {
-                        $context = new Context();
-                        $context->hydrate($value);
+                        $context = new Context($value);
                         $data['context'][$key] = $context;
                     }
                 }
