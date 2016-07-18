@@ -460,7 +460,7 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $contextData = array('key' => $key, 'value' => $value);
+                        $contextData = array('key' => $value['key'], 'value' => $value['value']);
                         $value       = new Context($contextData);
                     }
                     
