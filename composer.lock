@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e80933db491adfb70ffbd0088b560dab",
+    "hash": "485bffcc54989a5570aa2ae75bf16a0b",
     "content-hash": "5a33ab1bf80200fad45431242456ee25",
     "packages": [
         {
             "name": "fei/entities",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/entities.git",
-                "reference": "d2e632223448fe37f478508eb3081a1f97b2d427"
+                "reference": "bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/entities/zipball/d2e632223448fe37f478508eb3081a1f97b2d427",
-                "reference": "d2e632223448fe37f478508eb3081a1f97b2d427",
+                "url": "https://api.github.com/repos/flash-global/entities/zipball/bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab",
+                "reference": "bf2aa1ae8c0c49cb6989c58c721a45e8692a52ab",
                 "shasum": ""
             },
             "require-dev": {
@@ -36,10 +36,10 @@
             ],
             "description": "Entities descriptors and helpers",
             "support": {
-                "source": "https://github.com/flash-global/entities/tree/v1.0.3",
+                "source": "https://github.com/flash-global/entities/tree/v1.0.4",
                 "issues": "https://github.com/flash-global/entities/issues"
             },
-            "time": "2016-07-18 08:19:41"
+            "time": "2016-07-18 12:12:09"
         },
         {
             "name": "league/fractal",
