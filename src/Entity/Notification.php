@@ -454,11 +454,11 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $value = new Context(array('key' => $key, 'value' => $value));
+	                    $context_to_add = new Context(array('id' => $value['id'], 'key' => $value['key'], 'value' => $value['value']));
                     }
-                
-                    $value->setNotification($this);
-                    $this->contexts->add($value);
+
+	                $context_to_add->setNotification($this);
+	                $this->contexts->add($context_to_add);
                 }
             }
         
