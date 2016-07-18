@@ -489,6 +489,12 @@
         {
             if (!empty($data['context']))
             {
+                
+                if(is_string($data['context']))
+                {
+                    $data['context'] = json_decode($data['context'], true);
+                }
+                
                 foreach ((array) $data['context'] as $key => $value)
                 {
                     if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
@@ -505,6 +511,7 @@
                     }
                     
                     $context               = new Context($contextData);
+                    
                     $data['context'][$key] = $context;
                 }
             }
