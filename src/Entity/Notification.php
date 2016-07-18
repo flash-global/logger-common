@@ -460,7 +460,17 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $contextData = array('key' => $value['key'], 'value' => $value['value']);
+                        if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
+                        {
+                            $contextData = array('key' => $value['key'], 'value' => $value['value']);
+                            if (isset($value['id']))
+                            {
+                                $contextData['id'] = $value['id'];
+                            }
+                        }
+                        else {
+                            $contextData = array('key' => $key, 'value' => $value);
+                        }
                         $value       = new Context($contextData);
                     }
                     
@@ -484,9 +494,18 @@
                     if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
                     {
                         $contextData           = array('key' => $value['key'], 'value' => $value['value']);
-                        $context               = new Context($contextData);
-                        $data['context'][$key] = $context;
+                        if(isset($value['id']))
+                        {
+                            $contextData['id'] = $value['id'];
+                        }
                     }
+                    else
+                    {
+                        $contextData = array('key' => $key, 'value' => $value);
+                    }
+                    
+                    $context               = new Context($contextData);
+                    $data['context'][$key] = $context;
                 }
             }
             
