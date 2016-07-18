@@ -482,7 +482,8 @@
                 {
                     if(is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
                     {
-                        $context = new Context($value);
+                        $contextData = array('key' => $key, 'value' => $value);
+                        $context = new Context($contextData);
                         $data['context'][$key] = $context;
                     }
                 }
