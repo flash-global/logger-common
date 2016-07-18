@@ -460,7 +460,8 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $value = new Context($value);
+                        $contextData = array('key' => $key, 'value' => $value);
+                        $value     = new Context($contextData);
                     }
 
                     $value->setNotification($this);
