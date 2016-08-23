@@ -20,7 +20,7 @@
 
         /**
          * @ManyToOne(targetEntity="Notification", inversedBy="contexts")
-         * @JoinColumn(name="notification_id", referencedColumnName="id")
+         * @JoinColumn(name="notification_id", referencedColumnName="id", onDelete="CASCADE")
          */
         protected $notification;
 

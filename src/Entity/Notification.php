@@ -4,14 +4,15 @@
     use Doctrine\Common\Collections\ArrayCollection;
     use Fei\Entity\AbstractEntity;
 
-
     /**
      * Class NotificationEndpoint
      *
      * @Entity
-     * @Table(name="notifications", indexes={@Index(name="idx_notification_levels", columns={"level"}),
-     *                              @Index(name="idx_notification_servers", columns={"server"}),
-     *                                                                      @Index(name="idx_notification_envs", columns={"env"})})
+     * @Table(name="notifications", indexes={
+     *     @Index(name="idx_notification_levels", columns={"level"}),
+     *     @Index(name="idx_notification_servers", columns={"server"}),
+     *     @Index(name="idx_notification_envs", columns={"env"})
+     * })
      */
     class Notification extends AbstractEntity
     {
@@ -20,7 +21,8 @@
         const PERFORMANCE = 2;
         const BUSINESS    = 4;
         const AUDIT       = 8;
-        const SQL       = 16;
+        const SQL         = 16;
+        const TECHNICAL   = 32;
 
         // level
         const LVL_DEBUG   = 1;
@@ -29,10 +31,16 @@
         const LVL_ERROR   = 8;
         const LVL_PANIC   = 16;
 
-
         protected $levelLabels    = array(1 => 'Debug', 2 => 'Info', 4 => 'Warning', 8 => 'Error', 16 => 'Panic');
 
-        protected $categoryLabels = array(1 => 'Security', 2 => 'Performance', 4 => 'Business', 8 => 'Audit');
+        protected $categoryLabels = array(
+            1 => 'Security',
+            2 => 'Performance',
+            4 => 'Business',
+            8 => 'Audit',
+            16 => 'SQL',
+            32 => 'Technical'
+        );
 
         /**
          * @Id
@@ -460,8 +468,18 @@
                 {
                     if (!$value instanceof Context)
                     {
-                        $contextData = array('key' => $key, 'value' => $value);
-                        $value     = new Context($contextData);
+                        if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
+                        {
+                            $contextData = array('key' => $value['key'], 'value' => $value['value']);
+                            if (isset($value['id']))
+                            {
+                                $contextData['id'] = $value['id'];
+                            }
+                        }
+                        else {
+                            $contextData = array('key' => $key, 'value' => $value);
+                        }
+                        $value       = new Context($contextData);
                     }
 
                     $value->setNotification($this);
@@ -477,16 +495,32 @@
          */
         public function hydrate($data)
         {
-            if(!empty($data['context']))
+            if (!empty($data['context']))
             {
-                foreach((array) $data['context'] as $key => $value)
+
+                if(is_string($data['context']))
                 {
-                    if(is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
+                    $data['context'] = json_decode($data['context'], true);
+                }
+
+                foreach ((array) $data['context'] as $key => $value)
+                {
+                    if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
+                    {
+                        $contextData           = array('key' => $value['key'], 'value' => $value['value']);
+                        if(isset($value['id']))
+                        {
+                            $contextData['id'] = $value['id'];
+                        }
+                    }
+                    else
                     {
                         $contextData = array('key' => $key, 'value' => $value);
-                        $context = new Context($contextData);
-                        $data['context'][$key] = $context;
                     }
+
+                    $context               = new Context($contextData);
+
+                    $data['context'][$key] = $context;
                 }
             }
 
@@ -500,9 +534,11 @@
         {
             $data = parent::toArray($mapped);
 
-            if (!empty($data['context'])) {
+            if (!empty($data['context']))
+            {
                 $context = array();
-                foreach ($data['context'] as $key => $value) {
+                foreach ($data['context'] as $key => $value)
+                {
                     $context[$key] = $value->toArray();
                 }
                 $data['context'] = $context;
