@@ -8,9 +8,11 @@
      * Class NotificationEndpoint
      *
      * @Entity
-     * @Table(name="notifications", indexes={@Index(name="idx_notification_levels", columns={"level"}),
-     *                              @Index(name="idx_notification_servers", columns={"server"}),
-     *                                                                      @Index(name="idx_notification_envs", columns={"env"})})
+     * @Table(name="notifications", indexes={
+     *     @Index(name="idx_notification_levels", columns={"level"}),
+     *     @Index(name="idx_notification_servers", columns={"server"}),
+     *     @Index(name="idx_notification_envs", columns={"env"})
+     * })
      */
     class Notification extends AbstractEntity
     {
@@ -31,7 +33,14 @@
 
         protected $levelLabels    = array(1 => 'Debug', 2 => 'Info', 4 => 'Warning', 8 => 'Error', 16 => 'Panic');
 
-        protected $categoryLabels = array(1 => 'Security', 2 => 'Performance', 4 => 'Business', 8 => 'Audit');
+        protected $categoryLabels = array(
+            1 => 'Security',
+            2 => 'Performance',
+            4 => 'Business',
+            8 => 'Audit',
+            16 => 'SQL',
+            32 => 'Technical'
+        );
 
         /**
          * @Id
@@ -488,12 +497,12 @@
         {
             if (!empty($data['context']))
             {
-                
+
                 if(is_string($data['context']))
                 {
                     $data['context'] = json_decode($data['context'], true);
                 }
-                
+
                 foreach ((array) $data['context'] as $key => $value)
                 {
                     if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value))
@@ -510,7 +519,7 @@
                     }
 
                     $context               = new Context($contextData);
-                    
+
                     $data['context'][$key] = $context;
                 }
             }
