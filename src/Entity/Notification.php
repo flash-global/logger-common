@@ -93,7 +93,7 @@ class Notification extends AbstractEntity
     protected $server;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="text", nullable=true)
      *
      * This represents URL+QUERY STRING for HTTP environment and command line for CLI
      */
