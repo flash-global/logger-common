@@ -30,7 +30,7 @@
         protected $key;
 
         /**
-         * @Column(type="string", name="`value`")
+         * @Column(type="text", name="`value`")
          */
         protected $value;
 
