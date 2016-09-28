@@ -1,8 +1,8 @@
 <?php
 namespace Fei\Service\Logger\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
+use Fei\Service\Context\ContextAwareTrait;
 
 /**
  * Class NotificationEndpoint
@@ -16,6 +16,8 @@ use Fei\Entity\AbstractEntity;
  */
 class Notification extends AbstractEntity
 {
+    use ContextAwareTrait;
+
     // category
     const SECURITY    = 1;
     const PERFORMANCE = 2;
@@ -115,21 +117,6 @@ class Notification extends AbstractEntity
      * @Column(type="string")
      */
     protected $env = 'n/c';
-
-    /**
-     * @OneToMany(targetEntity="Context", mappedBy="notification", cascade={"all"})
-     */
-    protected $contexts;
-
-    /**
-     * Notification constructor.
-     */
-    public function __construct($data = null)
-    {
-        $this->contexts = new ArrayCollection();
-
-        parent::__construct($data);
-    }
 
     /**
      * @return mixed
@@ -440,50 +427,9 @@ class Notification extends AbstractEntity
     }
 
     /**
-     * @return ArrayCollection
-     */
-    public function getContext()
-    {
-        return $this->contexts;
-    }
-
-    /**
-     * @param $context
-     *
-     * @return $this
-     */
-    public function setContext($context)
-    {
-        if ($context instanceof Context) {
-            $context = [$context];
-        }
-
-        if ($context instanceof \ArrayObject || is_array($context) || $context instanceof \Iterator) {
-            foreach ($context as $key => $value) {
-                if (!$value instanceof Context) {
-                    if (is_int($key) && is_array($value) && array_key_exists('key', $value) && array_key_exists('value', $value)) {
-                        $contextData = ['key' => $value['key'], 'value' => $value['value']];
-                        if (isset($value['id'])) {
-                            $contextData['id'] = $value['id'];
-                        }
-                    } else {
-                        $contextData = ['key' => $key, 'value' => $value];
-                    }
-                    $value = new Context($contextData);
-                }
-
-                $value->setNotification($this);
-                $this->contexts->add($value);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function hydrate($data)
+    /*public function hydrate($data)
     {
         if (!empty($data['context'])) {
 
@@ -508,12 +454,12 @@ class Notification extends AbstractEntity
         }
 
         return parent::hydrate($data);
-    }
+    }*/
 
     /**
      * {@inheritdoc}
      */
-    public function toArray($mapped = false)
+    /*public function toArray($mapped = false)
     {
         $data = parent::toArray($mapped);
 
@@ -526,5 +472,5 @@ class Notification extends AbstractEntity
         }
 
         return $data;
-    }
+    }*/
 }
