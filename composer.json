@@ -20,7 +20,7 @@
     }
   ],
   "require": {
-    "league/fractal": "^0.13.0",
+    "league/fractal": "^0.14.0",
     "fei/entities": "^1.0.3",
     "doctrine/orm": ">=2.5"
   },
