@@ -1,7 +1,6 @@
 # Service Logger - Common
 
-[![GitHub release](https://img.shields.io/github/release/flash-global/logger-common.svg?style=for-the-badge)](README.md) [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=for-the-badge)](README.md)
-
+[![GitHub release](https://img.shields.io/github/release/flash-global/logger-common.svg?style=for-the-badge)](README.md)
 
 ## Table of contents
 - [Entities](#entities)
