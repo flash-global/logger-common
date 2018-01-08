@@ -22,7 +22,8 @@
   "require": {
     "league/fractal": "^0.14.0",
     "fei/entities": "^1.0.3",
-    "doctrine/orm": ">=2.5"
+    "doctrine/collections": "~1.2",
+    "doctrine/annotations": "1.*"
   },
   "require-dev": {
     "codeception/codeception": "^2.2"
