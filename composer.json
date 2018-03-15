@@ -1,17 +1,17 @@
 {
   "name": "fei/logger-common",
-  "description": "Flash applicative logger - common components",
+  "description": "Applicative logger - common components",
   "type": "library",
-  "keywords": [
-    "logger"
-  ],
-
+  "license": "GPL-3.0",
   "authors": [
     {
-      "name": "Gauthier Delamarre",
-      "email": "gauthier@opcoding.eu",
-      "role": "lead"
+      "name": "Yoctu",
+      "email": "contact@yoctu.com",
+      "homepage": "http://yoctu.com/"
     }
+  ],
+  "keywords": [
+    "logger"
   ],
   "repositories": [
     {
