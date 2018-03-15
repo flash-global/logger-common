@@ -199,7 +199,9 @@ class Notification extends AbstractEntity
     {
         $labels = [];
         foreach ($this->levelLabels as $level => $label) {
-            if ($level & $this->level) $labels[] = $label;
+            if ($level & $this->level) {
+                $labels[] = $label;
+            }
         }
 
         return implode(', ', $labels);
@@ -413,7 +415,9 @@ class Notification extends AbstractEntity
     {
         $labels = [];
         foreach ($this->categoryLabels as $category => $label) {
-            if ($category & $this->category) $labels[] = $label;
+            if ($category & $this->category) {
+                $labels[] = $label;
+            }
         }
 
         return implode(', ', $labels);
@@ -486,7 +490,6 @@ class Notification extends AbstractEntity
     public function hydrate($data)
     {
         if (!empty($data['context'])) {
-
             if (is_string($data['context'])) {
                 $data['context'] = json_decode($data['context'], true);
             }

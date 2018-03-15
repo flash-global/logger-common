@@ -9,110 +9,110 @@
      * @Entity
      * @Table(name="contexts")
      */
-    class Context extends AbstractEntity
-    {
-        /**
+class Context extends AbstractEntity
+{
+    /**
          * @Id
          * @GeneratedValue(strategy="AUTO")
          * @Column(type="integer")
          */
-        protected $id;
+    protected $id;
 
-        /**
+    /**
          * @ManyToOne(targetEntity="Notification", inversedBy="contexts")
          * @JoinColumn(name="notification_id", referencedColumnName="id", onDelete="CASCADE")
          */
-        protected $notification;
+    protected $notification;
 
-        /**
+    /**
          * @Column(type="string", name="`key`")
          */
-        protected $key;
+    protected $key;
 
-        /**
+    /**
          * @Column(type="text", name="`value`")
          */
-        protected $value;
+    protected $value;
 
 
-        /**
+    /**
          * @return mixed
          */
-        public function getId()
-        {
-            return $this->id;
-        }
+    public function getId()
+    {
+        return $this->id;
+    }
 
-        /**
+    /**
          * @param mixed $id
          *
          * @return Context
          */
-        public function setId($id)
-        {
-            $this->id = $id;
+    public function setId($id)
+    {
+        $this->id = $id;
 
-            return $this;
-        }
+        return $this;
+    }
 
 
-        /**
+    /**
          * @return mixed
          */
-        public function getNotification()
-        {
-            return $this->notification;
-        }
+    public function getNotification()
+    {
+        return $this->notification;
+    }
 
-        /**
+    /**
          * @param mixed $notification
          *
          * @return Context
          */
-        public function setNotification($notification)
-        {
-            $this->notification = $notification;
+    public function setNotification($notification)
+    {
+        $this->notification = $notification;
 
-            return $this;
-        }
+        return $this;
+    }
 
-        /**
+    /**
          * @return mixed
          */
-        public function getKey()
-        {
-            return $this->key;
-        }
+    public function getKey()
+    {
+        return $this->key;
+    }
 
-        /**
+    /**
          * @param mixed $key
          *
          * @return Context
          */
-        public function setKey($key)
-        {
-            $this->key = $key;
+    public function setKey($key)
+    {
+        $this->key = $key;
 
-            return $this;
-        }
+        return $this;
+    }
 
-        /**
+    /**
          * @return mixed
          */
-        public function getValue()
-        {
-            return $this->value;
-        }
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-        /**
+    /**
          * @param mixed $value
          *
          * @return Context
          */
-        public function setValue($value)
-        {
-            $this->value = $value;
+    public function setValue($value)
+    {
+        $this->value = $value;
 
-            return $this;
-        }
+        return $this;
     }
+}
