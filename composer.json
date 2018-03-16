@@ -13,12 +13,6 @@
   "keywords": [
     "logger"
   ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://composer.flash-global.net"
-    }
-  ],
   "require": {
     "league/fractal": "^0.14.0",
     "fei/entities": "^1.0.3",
