@@ -16,7 +16,7 @@
   "require": {
     "php": "^8.5",
     "league/fractal": "^0.20.1",
-    "fei/entities": "^3.0",
+    "fei/entities": "dev-feature/php-8.5 as 3.0.0",
     "doctrine/collections": "^1.8 || ^2.0",
     "doctrine/annotations": "^1.14 || ^2.0"
   },
@@ -28,6 +28,13 @@
   "autoload": {
     "psr-4": {
       "Fei\\Service\\Logger\\": "src"
+    }
+  },
+  "repositories": {
+    "fei-entities": {
+      "type": "vcs",
+      "url": "https://github.com/flash-global/entities",
+      "no-api": true
     }
   }
 }
